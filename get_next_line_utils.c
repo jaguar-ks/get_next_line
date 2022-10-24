@@ -3,45 +3,79 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deman_wolf <deman_wolf@student.42.fr>      +#+  +:+       +#+        */
+/*   By: faksouss <faksouss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 16:30:22 by deman_wolf        #+#    #+#             */
-/*   Updated: 2022/10/21 17:51:59 by deman_wolf       ###   ########.fr       */
+/*   Updated: 2022/10/24 02:06:22 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"get_next_line.h"
 
-char	*ft_strjoin(char *s1, char *s2)
+int	ft_strlen(char *s)
 {
-	int	i = -1;
-	int	j = -1;
-	char *d;
-
-	if (!s1 && !s2)
-		return NULL;
-	while(s1[++i]);
-	while(s2[++j]);
-	d = (char *)malloc(i + j);
-	if (!d)
-		return NULL;
-	i = -1;
-	j = -1;
-	while (s1[++i])
-		d[i] = s1[i];
-	while (s2[++j])
-		d[j+i] = s2[j];
-	d[j+i] = 0;
-	return d;
+	int	i = 0;
+	while (s[i])
+		i++;
+	return (i);
 }
 
-int	ft_strchr(const char *s, int c)
+char	*ft_strdup(char *s)
+{
+	int		i;
+	char	*d;
+
+	i = -1;
+	d = (char *)malloc(sizeof(char) * (ft_strlen(s) + 1));
+	if (!d)
+		return (NULL);
+	while (s[++i])
+		d[i] = s[i];
+	d[i] = '\0';
+	return (d);
+}
+
+char	*ft_concat(char *s, char *d)
+{
+	int	i;
+	int	j;
+
+	i = ft_strlen(d);
+	j = -1;
+	while (s[++j])
+		d[i + j] = s[j];
+	d[i + j] = '\0';
+	return (d);
+}
+
+char	*ft_strjoin(char  *s1, char  *s2)
+{
+	char	*d;
+	
+	if (!s1 && !s2)
+		return (NULL);
+	if (!s1)
+		return (ft_strdup(s2));
+	if (!s2)
+		return (ft_strdup(s1));
+	d = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
+	if (!d)
+		return (NULL);
+	d = ft_concat(s1, d);
+	d = ft_concat(s2, d);
+	return (d);
+}
+
+int	ft_strchr(char *s, int c)
 {
 	int	i;
 
-	i = -1;
-	while (s[++i])
+	i = 0;
+	while (s[i])
+	{
 		if (s[i] == (char)c)
 			return (1);
+		i++;
+	}
 	return (0);
 }

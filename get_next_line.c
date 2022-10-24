@@ -3,41 +3,89 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deman_wolf <deman_wolf@student.42.fr>      +#+  +:+       +#+        */
+/*   By: faksouss <faksouss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 16:20:09 by deman_wolf        #+#    #+#             */
-/*   Updated: 2022/10/21 17:58:54 by deman_wolf       ###   ########.fr       */
+/*   Updated: 2022/10/24 02:08:39 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"get_next_line.h"
 
-char	*jib_str(int fd, char *str)
+
+
+char	*rl(int fd, char *str)
 {
-	int i = 1;
-	char *bf = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1);
-	if (!bf)
-		return NULL;
-	while (i)
+	char		*buff;
+	int			ns;
+
+	ns = 1;
+	buff = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (!buff)
+		return (NULL);
+	while (ns)
 	{
-		i = read(fd, bf, BUFFER_SIZE);
-		if (i < 0)
+		ns = read(fd, buff, BUFFER_SIZE);
+		if (ns < 0)
 		{
-			free (bf);
-			return NULL;
+			free(buff);
+			return (NULL);
 		}
-		bf[i] = 0;
-		str = ft_strjoin(str, bf);
-		if(ft_strchr(str, '\n'))
+		buff[ns] = '\0';
+		str = ft_strjoin(str, buff);
+		if (ft_strchr(str, '\n'))
 			break ;
 	}
-	free (bf);
-	return str;
+	free(buff);
+	return (str);
 }
 
 char	*ltr(char *str)
 {
-	
+	int		i;
+	int		j;
+	char	*r;
+
+	if (!str)
+		return NULL;
+	i = 0;
+	j = -1;
+	while (str[i] && str[i] != '\n')
+		i++;
+	if (str[i] == '\n')
+		i++;
+	r = (char *)malloc((i + 1) * sizeof(char));
+	if (!r)
+		return NULL;
+	while (i > ++j)
+		r[j] = str[j];
+	r[j] = '\0';
+	return r;
+}
+
+char	*dlb(char *str)
+{
+	int	i = -1;
+	int	j = 0;
+	char	*r;
+
+	if (!str)
+		return NULL;
+	i = ft_strlen(str);
+	while (str[j] && str[j] != '\n')
+		j++;
+	if ((i  - j) > 0)
+	{
+		r = (char *)malloc(((i - j) + 1) * sizeof(char));
+		if (!r)
+			return NULL;
+		i = 0;
+		while (str[++j])
+			r[i++] = str[j];
+		r[i] = '\0';
+		return r;
+	}
+	return NULL;
 }
 
 char	*get_next_line(int fd)
@@ -47,9 +95,10 @@ char	*get_next_line(int fd)
 	
 	if (fd < 0 && BUFFER_SIZE <= 0)
 		return NULL;
-	str = jib_str(fd, str);
+	str = rl(fd, str);
 	if (!str)
 		return NULL;
 	buff = ltr(str);
-	return (str);
+	str = dlb(str);
+	return (buff);
 }
