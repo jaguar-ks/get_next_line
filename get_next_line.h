@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 16:21:01 by deman_wolf        #+#    #+#             */
-/*   Updated: 2022/10/24 05:07:55 by faksouss         ###   ########.fr       */
+/*   Updated: 2022/10/24 05:41:29 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,6 @@
 # ifndef BUFFER_SIZE
 # define	BUFFER_SIZE
 #endif
-
-typedef struct s_list
-{
-	char			*content;
-	struct s_list	*next;
-}	t_list;
 
 char	*get_next_line(int fd);
 char	*ft_strjoin(char *s1, char *s2);
