@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: faksouss <faksouss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deman_wolf <deman_wolf@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 16:20:09 by deman_wolf        #+#    #+#             */
-/*   Updated: 2022/10/24 05:28:15 by faksouss         ###   ########.fr       */
+/*   Updated: 2022/10/24 06:45:16 by deman_wolf       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"get_next_line.h"
-
-
 
 char	*rl(int fd, char *str)
 {
@@ -33,7 +31,7 @@ char	*rl(int fd, char *str)
 		}
 		buff[ns] = '\0';
 		if (!ft_strlen(buff))
-			return str;
+			return (str);
 		str = ft_strjoin(str, buff);
 		if (ft_strchr(str, '\n'))
 			break ;
@@ -49,7 +47,7 @@ char	*ltr(char *str)
 	char	*r;
 
 	if (!str)
-		return NULL;
+		return (NULL);
 	i = 0;
 	j = -1;
 	while (str[i] && str[i] != '\n')
@@ -58,48 +56,49 @@ char	*ltr(char *str)
 		i++;
 	r = (char *)malloc((i + 1) * sizeof(char));
 	if (!r)
-		return NULL;
+		return (NULL);
 	while (i > ++j)
 		r[j] = str[j];
 	r[j] = '\0';
-	return r;
+	return (r);
 }
 
 char	*dlb(char *str)
 {
-	int	i = -1;
-	int	j = 0;
+	int		i;
+	int		j;
 	char	*r;
 
 	if (!str)
-		return NULL;
+		return (NULL);
 	i = ft_strlen(str);
+	j = 0;
 	while (str[j] && str[j] != '\n')
 		j++;
-	if ((i  - j) > 0)
+	if ((i - j) > 0)
 	{
 		r = (char *)malloc(((i - j) + 1) * sizeof(char));
 		if (!r)
-			return NULL;
+			return (NULL);
 		i = 0;
 		while (str[++j])
 			r[i++] = str[j];
 		r[i] = '\0';
-		return r;
+		return (r);
 	}
-	return NULL;
+	return (NULL);
 }
 
 char	*get_next_line(int fd)
 {
 	char		*buff;
 	static char	*str;
-	
+
 	if (fd < 0 && BUFFER_SIZE <= 0)
-		return NULL;
+		return (NULL);
 	str = rl(fd, str);
 	if (!str)
-		return NULL;
+		return (NULL);
 	buff = ltr(str);
 	str = dlb(str);
 	return (buff);

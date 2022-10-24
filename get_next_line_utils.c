@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: faksouss <faksouss@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deman_wolf <deman_wolf@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 16:30:22 by deman_wolf        #+#    #+#             */
-/*   Updated: 2022/10/24 04:47:25 by faksouss         ###   ########.fr       */
+/*   Updated: 2022/10/24 06:45:52 by deman_wolf       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 int	ft_strlen(char *s)
 {
-	int	i = 0;
+	int	i;
+
+	i = 0;
 	while (s[i])
 		i++;
 	return (i);
@@ -48,10 +50,10 @@ char	*ft_concat(char *s, char *d)
 	return (d);
 }
 
-char	*ft_strjoin(char  *s1, char  *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*d;
-	
+
 	if (!s1 && !s2)
 		return (NULL);
 	if (!s1)
