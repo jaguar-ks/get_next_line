@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 16:20:09 by deman_wolf        #+#    #+#             */
-/*   Updated: 2022/10/24 02:08:39 by faksouss         ###   ########.fr       */
+/*   Updated: 2022/10/24 05:28:15 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ char	*rl(int fd, char *str)
 			return (NULL);
 		}
 		buff[ns] = '\0';
+		if (!ft_strlen(buff))
+			return str;
 		str = ft_strjoin(str, buff);
 		if (ft_strchr(str, '\n'))
 			break ;

@@ -6,7 +6,7 @@
 /*   By: faksouss <faksouss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 16:30:22 by deman_wolf        #+#    #+#             */
-/*   Updated: 2022/10/24 02:06:22 by faksouss         ###   ########.fr       */
+/*   Updated: 2022/10/24 04:47:25 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ char	*ft_strjoin(char  *s1, char  *s2)
 		return (NULL);
 	if (!s1)
 		return (ft_strdup(s2));
-	if (!s2)
-		return (ft_strdup(s1));
 	d = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
 	if (!d)
 		return (NULL);
