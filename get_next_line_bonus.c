@@ -5,101 +5,77 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: faksouss <faksouss@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/25 00:21:13 by faksouss          #+#    #+#             */
-/*   Updated: 2022/10/25 02:54:25 by faksouss         ###   ########.fr       */
+/*   Created: 2022/10/26 05:38:56 by faksouss          #+#    #+#             */
+/*   Updated: 2022/10/26 05:44:01 by faksouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"get_next_line_bonus.h"
+#include "get_next_line_bonus.h"
 
-char	*rl(int fd, char *str)
-{
-	char		*buff;
-	int			ns;
-
-	ns = 1;
-	buff = malloc((BUFFER_SIZE + 1) * sizeof(char));
-	if (!buff)
-		return (NULL);
-	while (ns)
-	{
-		ns = read(fd, buff, BUFFER_SIZE);
-		if (ns < 0)
-		{
-			free(buff);
-			return (NULL);
-		}
-		buff[ns] = '\0';
-		if (!ft_strlen(buff))
-			return (str);
-		str = ft_strjoin(str, buff);
-		if (ft_strchr(str, '\n'))
-			break ;
-	}
-	free(buff);
-	return (str);
-}
-
-char	*ltr(char *str)
+char	*rtrn_ln(char *s)
 {
 	int		i;
-	int		j;
 	char	*r;
 
-	if (!str)
+	if (!s || !ft_strlen(s))
 		return (NULL);
 	i = 0;
-	j = -1;
-	while (str[i] && str[i] != '\n')
+	while (s[i] && s[i] != '\n')
 		i++;
-	if (str[i] == '\n')
+	if (s[i] == '\n')
 		i++;
-	r = (char *)malloc((i + 1) * sizeof(char));
-	if (!r)
-		return (NULL);
-	while (i > ++j)
-		r[j] = str[j];
-	r[j] = '\0';
+	r = ft_substr(s, 0, i);
 	return (r);
 }
 
-char	*dlb(char *str)
+char	*th_rst(char *s)
 {
 	int		i;
 	int		j;
 	char	*r;
 
-	if (!str)
+	if (!s)
 		return (NULL);
-	i = ft_strlen(str);
+	i = ft_strlen(s);
 	j = 0;
-	while (str[j] && str[j] != '\n')
+	while (s[j] && s[j] != '\n')
 		j++;
-	if ((i - j) > 0)
-	{
-		r = (char *)malloc(((i - j) + 1) * sizeof(char));
-		if (!r)
-			return (NULL);
-		i = 0;
-		while (str[++j])
-			r[i++] = str[j];
-		r[i] = '\0';
-		return (r);
-	}
-	return (NULL);
+	if (!s[j])
+		return (free(s), NULL);
+	if (s[j] == '\n')
+		j++;
+	r = ft_substr(s, j, (i - j));
+	free(s);
+	if (!ft_strlen(r))
+		return (free(r), NULL);
+	return (r);
 }
 
 char	*get_next_line(int fd)
 {
-	char		*buff;
-	static char	*str[10240];
+	char		*bf;
+	static char	*s[10240];
+	char		*r;
+	int			i;
 
 	if (fd < 0 && BUFFER_SIZE <= 0)
 		return (NULL);
-	str[fd] = rl(fd, str[fd]);
-	if (!str)
-		return (NULL);
-	buff = ltr(str[fd]);
-	str[fd] = dlb(str[fd]);
-	return (buff);
+	i = 1;
+	while (i && search(s[fd], '\n'))
+	{
+		bf = (char *)malloc(BUFFER_SIZE + 1);
+		if (!bf)
+			return (NULL);
+		i = read(fd, bf, BUFFER_SIZE);
+		if (i < 0)
+			return (free(bf), NULL);
+		bf[i] = '\0';
+		if (!ft_strlen(bf))
+		{
+			free(bf);
+			break ;
+		}
+		s[fd] = join_str(s[fd], bf);
+	}
+	return ((r = rtrn_ln(s[fd])), (s[fd] = th_rst(s[fd])), r);
 }
